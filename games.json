@@ -16,9 +16,9 @@
     {
         "name": "Club Penguin",
         "shutdown": "2017-03-30",
-        "background": "https://i.imgur.com/yourClubPenguinBG.jpg",
-        "reddit_post": "https://i.imgur.com/yourClubPenguinReddit.png",
-        "reddit_user": "u/PenguinNostalgia"
+        "background": "https://miro.medium.com/v2/resize:fit:1400/1*C6vV-y-RcGyhwWXfJFwUpg.png",
+        "reddit_post": "https://i.imgur.com/Sfvmjvs.png",
+        "reddit_user": "u/_minishh__"
     },
     {
         "name": "Moshi Monsters",
@@ -30,29 +30,22 @@
     {
         "name": "Toontown Online",
         "shutdown": "2013-09-19",
-        "background": "https://i.imgur.com/yourToontownBG.jpg",
-        "reddit_post": "https://i.imgur.com/yourToontownReddit.png",
-        "reddit_user": "u/ToonTears"
+        "background": "https://tcrf.net/images/f/f4/TTO_2001_PrereleaseImage.jpg",
+        "reddit_post": "https://i.imgur.com/A9TJAwY.png",
+        "reddit_user": "u/sweetangelttr"
     },
     {
-        "name": "Monkey Quest",
-        "shutdown": "2014-09-26",
-        "background": "https://i.imgur.com/yourMonkeyQuestBG.jpg",
-        "reddit_post": "https://i.imgur.com/yourMonkeyQuestReddit.png",
+        "name": "Enjin for Minecraft",
+        "shutdown": "2023-04-30",
+        "background": "https://comparakeet.com/wp-content/uploads/2018/04/Enjin-sample-forums-1024x620.png",
+        "reddit_post": "https://i.imgur.com/xmHAZ4E.png",
         "reddit_user": "u/JungleNostalgic"
     },
     {
-        "name": "Bin Weevils",
-        "shutdown": "2021-01-16",
-        "background": "https://i.imgur.com/yourBinWeevilsBG.jpg",
-        "reddit_post": "https://i.imgur.com/yourBinWeevilsReddit.png",
-        "reddit_user": "u/WeevilReminisce"
-    },
-    {
-        "name": "Shockwave & Flash Games",
-        "shutdown": "2020-12-31",
-        "background": "https://i.imgur.com/yourFlashGamesBG.jpg",
-        "reddit_post": "https://i.imgur.com/yourFlashGamesReddit.png",
-        "reddit_user": "u/FlashForever"
+        "name": "Webkinz",
+        "shutdown": "????-??-?? (operational but many in-game qualities are gone)",
+        "background": "https://static.wikia.nocookie.net/virtual-worlds/images/5/5a/Webkinz10.png/revision/latest?cb=20220326174909",
+        "reddit_post": "https://i.imgur.com/lVam1mD.png",
+        "reddit_user": "u/thegreatcatsby513"
     }
 ]

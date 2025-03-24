@@ -5,12 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>did the mourning birds stop chirping, or did we just stop listening as we grew older?</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Rainbow text effect */
+        @keyframes rainbow {
+            0% { color: red; }
+            14% { color: orange; }
+            28% { color: yellow; }
+            42% { color: green; }
+            57% { color: blue; }
+            71% { color: indigo; }
+            85% { color: violet; }
+            100% { color: red; }
+        }
+
+        #rainbow-text {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            background-color: white;
+            display: inline-block;
+            border-radius: 5px;
+            animation: rainbow 3s infinite linear;
+        }
+
+        #overlay {
+            text-align: center;
+        }
+
+        #gravestone {
+            cursor: pointer;
+            max-width: 70px; /* Increased size */
+            margin: 20px auto;
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <div id="overlay">
+        <p id="rainbow-text">Click on the gravestone to blast through the past</p>
         <img id="reddit-post" src="" alt="reddit nostalgia post" style="display: block; margin: 0 auto; max-width: 90%; border-radius: 10px;">
         <div id="citation" style="text-align: center;">
-            <img src="" alt="Gravestone Icon" id="gravestone" style="cursor: pointer; max-width: 50px; margin: 20px auto; display: block;"> <!-- Gravestone will be set by JS -->
+            <img src="" alt="Gravestone Icon" id="gravestone"> <!-- Gravestone will be set by JS -->
             <p id="citation-text" style="background-color: white; color: black; padding: 10px; display: inline-block;"></p>
         </div>
     </div>
@@ -31,30 +67,39 @@
                 "reddit_post": "https://i.imgur.com/Kody2Ag.png",
                 "reddit_user": "u/BFGfreak"
             },
-            // Add other games here...
+            {
+                "name": "Club Penguin",
+                "shutdown": "2017-03-30",
+                "background": "https://miro.medium.com/v2/resize:fit:1400/1*C6vV-y-RcGyhwWXfJFwUpg.png",
+                "reddit_post": "https://i.imgur.com/Sfvmjvs.png",
+                "reddit_user": "u/_minishh__"
+            },
+            {
+                "name": "Enjin for Minecraft",
+                "shutdown": "2023-04-30",
+                "background": "https://comparakeet.com/wp-content/uploads/2018/04/Enjin-sample-forums-1024x620.png",
+                "reddit_post": "https://i.imgur.com/xmHAZ4E.png",
+                "reddit_user": "u/JungleNostalgic"
+            },
+            {
+                "name": "Webkinz",
+                "shutdown": "????-??-?? (operational but many in-game qualities are gone)",
+                "background": "https://static.wikia.nocookie.net/virtual-worlds/images/5/5a/Webkinz10.png/revision/latest?cb=20220326174909",
+                "reddit_post": "https://i.imgur.com/lVam1mD.png",
+                "reddit_user": "u/thegreatcatsby513"
+            }
         ];
 
-        // Function to change to a random game
         function changeGame() {
             const randomGame = games[Math.floor(Math.random() * games.length)];
 
-            // Set background image of the page
             document.body.style.backgroundImage = `url('${randomGame.background}')`;
-
-            // Set Reddit post image
             document.getElementById('reddit-post').src = randomGame.reddit_post;
-
-            // Set citation text with Reddit user and game info
             document.getElementById('citation-text').textContent = `${randomGame.reddit_user} - ${randomGame.name} (Shutdown: ${randomGame.shutdown})`;
-
-            // Link gravestone image to Imgur (replace with your actual gravestone image URL)
-            document.getElementById('gravestone').src = 'https://i.imgur.com/Rcve9df.png'; // Example Imgur link
+            document.getElementById('gravestone').src = 'https://i.imgur.com/Rcve9df.png'; // Example gravestone image
         }
 
-        // Call the function to initialize with a random game
         changeGame();
-
-        // Add event listener to gravestone to change game when clicked
         document.getElementById('gravestone').addEventListener('click', changeGame);
     </script>
 </body>
