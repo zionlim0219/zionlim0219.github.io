@@ -16,5 +16,28 @@
     </div>
 
     <script src="script.js"></script>
+
+    <script>
+        // This is hardcoding the Fantage data directly from your games.json
+        const fantageGame = {
+            "name": "Fantage",
+            "shutdown": "2018-06-30",
+            "background": "https://www.brianschung.com/wp-content/uploads/2015/11/fantage_01.png",
+            "reddit_post": "https://i.imgur.com/wZqlKZY.png",
+            "reddit_user": "u/thoselonelyeyes"
+        };
+
+        // Set background image of the page
+        document.body.style.backgroundImage = `url('${fantageGame.background}')`;
+
+        // Set Reddit post image
+        document.getElementById('reddit-post').src = fantageGame.reddit_post;
+
+        // Set citation text with Reddit user and game info
+        document.getElementById('citation-text').textContent = `${fantageGame.reddit_user} - ${fantageGame.name} (Shutdown: ${fantageGame.shutdown})`;
+
+        // Optionally, set gravestone image
+        document.getElementById('gravestone').src = 'assets/gravestone.png'; // Add your gravestone image URL here
+    </script>
 </body>
 </html>
