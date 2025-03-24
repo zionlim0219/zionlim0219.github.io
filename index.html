@@ -35,21 +35,42 @@
 
         #gravestone {
             cursor: pointer;
-            max-width: 70px; /* Increased size */
+            max-width: 100px; /* Made bigger */
             margin: 20px auto;
             display: block;
+        }
+
+        #nostalgia-text {
+            text-align: center;
+            background-color: white;
+            color: black;
+            padding: 15px;
+            margin: 30px auto;
+            max-width: 80%;
+            border-radius: 5px;
+            font-size: 16px;
+            line-height: 1.5;
         }
     </style>
 </head>
 <body>
     <div id="overlay">
-        <p id="rainbow-text">Click on the gravestone to blast through the past</p>
+        <p id="rainbow-text">click on the gravestone to blast through the past</p>
         <img id="reddit-post" src="" alt="reddit nostalgia post" style="display: block; margin: 0 auto; max-width: 90%; border-radius: 10px;">
         <div id="citation" style="text-align: center;">
             <img src="" alt="Gravestone Icon" id="gravestone"> <!-- Gravestone will be set by JS -->
             <p id="citation-text" style="background-color: white; color: black; padding: 10px; display: inline-block;"></p>
         </div>
     </div>
+
+    <p id="nostalgia-text">
+        i always cling onto bits and pieces from my childhood that bring me nostalgia.  
+        i'm sure things weren’t actually better back then, but it's a nice form of escapism,  
+        and games are a big part of it. still is today, even though i'm a 21 year old piece of shit
+        that should take life more seriously.  
+        i used to wonder where the mourning birds that chirp at dawn went,  
+        but maybe i've just stopped listening to them now that I grew older.
+    </p>
 
     <script>
         const games = [
@@ -84,7 +105,7 @@
             {
                 "name": "Webkinz",
                 "shutdown": "????-??-?? (operational but many in-game qualities are gone)",
-                "background": "https://static.wikia.nocookie.net/virtual-worlds/images/5/5a/Webkinz10.png/revision/latest?cb=20220326174909",
+                "background": "https://webkinznewz.ganzworld.com/wp-content/uploads/2017/12/Early-Webkinz-Mobile-App2.png",
                 "reddit_post": "https://i.imgur.com/lVam1mD.png",
                 "reddit_user": "u/thegreatcatsby513"
             }
