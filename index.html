@@ -1,43 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>did the mourning birds stop chirping, or did we just stop listening as we grew older?</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div id="overlay">
-        <img id="reddit-post" src="" alt="reddit nostalgia post">
-        <div id="citation">
-            <img src="" alt="Gravestone Icon" id="gravestone">  <!-- Gravestone will be set by JS -->
-            <p id="citation-text"></p>
-        </div>
-    </div>
-
-    <script src="script.js"></script> hello
-
-    <script>
-        // This is hardcoding the Fantage data directly from your games.json
-        const fantageGame = {
+<script>
+    const games = [
+        {
             "name": "Fantage",
             "shutdown": "2018-06-30",
             "background": "https://www.brianschung.com/wp-content/uploads/2015/11/fantage_01.png",
             "reddit_post": "https://i.imgur.com/wZqlKZY.png",
             "reddit_user": "u/thoselonelyeyes"
-        };
+        },
+        {
+            "name": "Pixie Hollow",
+            "shutdown": "2013-09-19",
+            "background": "https://i.ytimg.com/vi/dbZ6rAxK9bk/maxresdefault.jpg",
+            "reddit_post": "https://i.imgur.com/Kody2Ag.png",
+            "reddit_user": "u/BFGfreak"
+        },
+        // Add other games here...
+    ];
+
+    // Function to change to a random game
+    function changeGame() {
+        const randomGame = games[Math.floor(Math.random() * games.length)];
 
         // Set background image of the page
-        document.body.style.backgroundImage = `url('${fantageGame.background}')`;
+        document.body.style.backgroundImage = `url('${randomGame.background}')`;
 
         // Set Reddit post image
-        document.getElementById('reddit-post').src = fantageGame.reddit_post;
+        document.getElementById('reddit-post').src = randomGame.reddit_post;
 
         // Set citation text with Reddit user and game info
-        document.getElementById('citation-text').textContent = `${fantageGame.reddit_user} - ${fantageGame.name} (Shutdown: ${fantageGame.shutdown})`;
+        document.getElementById('citation-text').textContent = `${randomGame.reddit_user} - ${randomGame.name} (Shutdown: ${randomGame.shutdown})`;
 
-        // Optionally, set gravestone image
-        document.getElementById('gravestone').src = 'assets/gravestone.png'; // Add your gravestone image URL here
-    </script>
-</body>
-</html>
+        // Link gravestone image to Imgur
+        document.getElementById('gravestone').src = 'https://i.imgur.com/yourGravestoneImage.png'; // Link to Imgur gravestone image
+    }
+
+    // Call the function to initialize with a random game
+    changeGame();
+
+    // Add event listener to gravestone to change game when clicked
+    document.getElementById('gravestone').addEventListener('click', changeGame);
+</script>
