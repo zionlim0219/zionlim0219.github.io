@@ -1,0 +1,58 @@
+[
+    {
+        "name": "Fantage",
+        "shutdown": "2018-06-30",
+        "background": "https://www.brianschung.com/wp-content/uploads/2015/11/fantage_01.png",
+        "reddit_post": "https://i.imgur.com/wZqlKZY.png",
+        "reddit_user": "u/thoselonelyeyes"
+    },
+    {
+        "name": "Pixie Hollow",
+        "shutdown": "2013-09-19",
+        "background": "https://i.ytimg.com/vi/dbZ6rAxK9bk/maxresdefault.jpg",
+        "reddit_post": "https://i.imgur.com/Kody2Ag.png",
+        "reddit_user": "u/BFGfreak"
+    },
+    {
+        "name": "Club Penguin",
+        "shutdown": "2017-03-30",
+        "background": "https://i.imgur.com/yourClubPenguinBG.jpg",
+        "reddit_post": "https://i.imgur.com/yourClubPenguinReddit.png",
+        "reddit_user": "u/PenguinNostalgia"
+    },
+    {
+        "name": "Moshi Monsters",
+        "shutdown": "2019-12-13",
+        "background": "https://i.imgur.com/yourMoshiMonstersBG.jpg",
+        "reddit_post": "https://i.imgur.com/yourMoshiMonstersReddit.png",
+        "reddit_user": "u/MoshiMemories"
+    },
+    {
+        "name": "Toontown Online",
+        "shutdown": "2013-09-19",
+        "background": "https://i.imgur.com/yourToontownBG.jpg",
+        "reddit_post": "https://i.imgur.com/yourToontownReddit.png",
+        "reddit_user": "u/ToonTears"
+    },
+    {
+        "name": "Monkey Quest",
+        "shutdown": "2014-09-26",
+        "background": "https://i.imgur.com/yourMonkeyQuestBG.jpg",
+        "reddit_post": "https://i.imgur.com/yourMonkeyQuestReddit.png",
+        "reddit_user": "u/JungleNostalgic"
+    },
+    {
+        "name": "Bin Weevils",
+        "shutdown": "2021-01-16",
+        "background": "https://i.imgur.com/yourBinWeevilsBG.jpg",
+        "reddit_post": "https://i.imgur.com/yourBinWeevilsReddit.png",
+        "reddit_user": "u/WeevilReminisce"
+    },
+    {
+        "name": "Shockwave & Flash Games",
+        "shutdown": "2020-12-31",
+        "background": "https://i.imgur.com/yourFlashGamesBG.jpg",
+        "reddit_post": "https://i.imgur.com/yourFlashGamesReddit.png",
+        "reddit_user": "u/FlashForever"
+    }
+]
