@@ -1,0 +1,5 @@
+const images = [
+  "https://your-image-url-1.jpg",
+  "https://your-image-url-2.jpg",
+  "https://your-image-url-3.jpg"
+];
