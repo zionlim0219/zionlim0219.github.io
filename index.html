@@ -1,127 +1,303 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>did the mourning birds stop chirping, or did we just stop listening as we grew older?</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Rainbow text effect */
-        @keyframes rainbow {
-            0% { color: red; }
-            14% { color: orange; }
-            28% { color: yellow; }
-            42% { color: green; }
-            57% { color: blue; }
-            71% { color: indigo; }
-            85% { color: violet; }
-            100% { color: red; }
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bumpin' — Background + Continuous Text</title>
+  <style>
+    :root{
+      --bg-overlay: rgba(0,0,0,0.45);
+      --text-color: #fff;
+      --accent: #ffd166;
+      --max-width: 1200px;
+      --font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
 
-        #rainbow-text {
-            font-size: 20px;
-            font-weight: bold;
-            text-align: center;
-            padding: 10px;
-            background-color: white;
-            display: inline-block;
-            border-radius: 5px;
-            animation: rainbow 3s infinite linear;
-        }
+    html,body{height:100%;margin:0}
+    body{
+      font-family:var(--font-family);
+      background:#000; /* fallback */
+      display:flex;align-items:center;justify-content:center;
+      color:var(--text-color);
+    }
 
-        #overlay {
-            text-align: center;
-        }
+    /* Stage that holds the background images and the overlaying text */
+    .stage{
+      position:relative;
+      width:min(100%,var(--max-width));
+      height:80vh;
+      overflow:hidden;
+      border-radius:14px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.6);
+    }
 
-        #gravestone {
-            cursor: pointer;
-            max-width: 100px; /* Made bigger */
-            margin: 20px auto;
-            display: block;
-        }
+    /* Background images: we'll swap the image on the .bg element */
+    .bg{
+      position:absolute;inset:0;background-size:cover;background-position:center;
+      transition:opacity 1s ease;
+      will-change:opacity,transform;
+    }
 
-        #nostalgia-text {
-            text-align: center;
-            background-color: white;
-            color: black;
-            padding: 15px;
-            margin: 30px auto;
-            max-width: 80%;
-            border-radius: 5px;
-            font-size: 16px;
-            line-height: 1.5;
-        }
-    </style>
+    .bg::after{ /* subtle dark overlay */
+      content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.5));
+    }
+
+    /* Text overlay container */
+    .overlay{
+      position:absolute;inset:0;display:flex;flex-direction:column;pointer-events:none;
+    }
+
+    .top-left-hint{
+      position:absolute;left:18px;top:18px;background:rgba(0,0,0,0.35);padding:8px 10px;border-radius:8px;font-size:13px;pointer-events:auto;
+      backdrop-filter:blur(3px);
+    }
+
+    /* The stream area — text lines will be appended here */
+    .stream{
+      margin:40px 60px 60px 60px; /* leave space around */
+      padding:12px;flex:1;display:flex;flex-direction:column;gap:8px;justify-content:flex-end;overflow:hidden;
+    }
+
+    .line{
+      font-size:clamp(18px,2.4vw,32px);
+      line-height:1.05;font-weight:700;white-space:nowrap;
+      transform:translateY(20px);opacity:0; /* start slightly down */
+      animation:rise 4s linear forwards;
+      text-shadow:0 4px 18px rgba(0,0,0,0.6);
+      pointer-events:auto;
+      padding:4px 8px;border-radius:6px;display:inline-block;
+    }
+
+    /* Slight alternating styles to give depth */
+    .line.alt{font-weight:800;letter-spacing:0.6px}
+
+    @keyframes rise{
+      0%{ transform:translateY(20px) scale(0.98); opacity:0 }
+      10%{ opacity:1 }
+      90%{ transform:translateY(-120%); opacity:0.12 }
+      100%{ transform:translateY(-200%); opacity:0 }
+    }
+
+    /* Controls panel bottom-right */
+    .controls{
+      position:absolute;right:18px;bottom:18px;background:rgba(0,0,0,0.35);padding:10px;border-radius:10px;font-size:13px;display:flex;gap:8px;align-items:center;pointer-events:auto;
+    }
+
+    .btn{background:transparent;border:1px solid rgba(255,255,255,0.12);color:var(--text-color);padding:6px 10px;border-radius:8px;cursor:pointer}
+    .btn:active{transform:translateY(1px)}
+
+    /* Pause overlay when hovered */
+    .stage:hover .line{animation-play-state:paused}
+
+    /* Responsive tweaks */
+    @media (max-width:640px){
+      .stream{margin:20px}
+      .top-left-hint{font-size:12px}
+    }
+  </style>
 </head>
 <body>
-    <div id="overlay">
-        <p id="rainbow-text">click on the gravestone to blast through the past</p>
-        <img id="reddit-post" src="" alt="reddit nostalgia post" style="display: block; margin: 0 auto; max-width: 90%; border-radius: 10px;">
-        <div id="citation" style="text-align: center;">
-            <img src="" alt="Gravestone Icon" id="gravestone"> <!-- Gravestone will be set by JS -->
-            <p id="citation-text" style="background-color: white; color: black; padding: 10px; display: inline-block;"></p>
-        </div>
+  <div class="stage" id="stage">
+    <div class="bg" id="bg1" style="opacity:1"></div>
+    <div class="bg" id="bg2" style="opacity:0"></div>
+
+    <div class="overlay">
+      <div class="top-left-hint">Hover to pause · images change every 2s</div>
+      <div class="stream" id="stream" aria-live="polite"></div>
+      <div class="controls">
+        <button class="btn" id="pauseBtn">Pause</button>
+        <button class="btn" id="clearBtn">Clear</button>
+        <label style="font-size:12px;opacity:0.9;margin-left:6px">Speed:</label>
+        <input id="speed" type="range" min="200" max="1600" value="700">
+      </div>
     </div>
+  </div>
 
-    <p id="nostalgia-text">
-        i always cling onto bits and pieces from my childhood that bring me nostalgia.  
-        i'm sure things weren’t actually better back then, but it's a nice form of escapism,  
-        and games are a big part of it. still is today, even though i'm a 21 year old piece of shit
-        that should take life more seriously.  
-        i used to wonder where the mourning birds that chirp at dawn went,  
-        but maybe i've just stopped listening to them now that I grew older.
-    </p>
+  <script>
+    /* ======== CONFIG ======== */
+    // Background images: replace these with local files (e.g. './images/1.jpg')
+    const images = [
+      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=1',
+      'https://images.unsplash.com/photo-1520975912429-2d7f6b9bff1f?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=2',
+      'https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=3',
+      'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=4'
+    ];
 
-    <script>
-        const games = [
-            {
-                "name": "Fantage",
-                "shutdown": "2018-06-30",
-                "background": "https://www.brianschung.com/wp-content/uploads/2015/11/fantage_01.png",
-                "reddit_post": "https://i.imgur.com/wZqlKZY.png",
-                "reddit_user": "u/thoselonelyeyes"
-            },
-            {
-                "name": "Pixie Hollow",
-                "shutdown": "2013-09-19",
-                "background": "https://i.ytimg.com/vi/dbZ6rAxK9bk/maxresdefault.jpg",
-                "reddit_post": "https://i.imgur.com/Kody2Ag.png",
-                "reddit_user": "u/BFGfreak"
-            },
-            {
-                "name": "Club Penguin",
-                "shutdown": "2017-03-30",
-                "background": "https://miro.medium.com/v2/resize:fit:1400/1*C6vV-y-RcGyhwWXfJFwUpg.png",
-                "reddit_post": "https://i.imgur.com/Sfvmjvs.png",
-                "reddit_user": "u/_minishh__"
-            },
-            {
-                "name": "Enjin for Minecraft",
-                "shutdown": "2023-04-30",
-                "background": "https://comparakeet.com/wp-content/uploads/2018/04/Enjin-sample-forums-1024x620.png",
-                "reddit_post": "https://i.imgur.com/xmHAZ4E.png",
-                "reddit_user": "u/JungleNostalgic"
-            },
-            {
-                "name": "Webkinz",
-                "shutdown": "????-??-?? (operational but many in-game qualities are gone)",
-                "background": "https://webkinznewz.ganzworld.com/wp-content/uploads/2017/12/Early-Webkinz-Mobile-App2.png",
-                "reddit_post": "https://i.imgur.com/lVam1mD.png",
-                "reddit_user": "u/thegreatcatsby513"
-            }
-        ];
+    // Lyrics — user-provided. We use template literal so newlines are preserved.
+    const lyrics = `Bumpin' that, bumpin' that, bumpin' that, bumpin' that
+Bumpin' that, bumpin' that, bumpin' that, bumpin' that
+Okay, okay
+Okay, okay, okay
+Here we go
+When I'm in the club, yeah, I'm (bumpin' that)
+When I'm at the house, yeah, I'm (bumpin' that)
+365, party girl (bumpin' that)
+Should we do a little key?
+Should we have a little line?
+Wanna go real wild when I'm (bumpin' that)
+Meet me in the bathroom if you're (bumpin' that)
+365, party girl (bumpin' that)
+French manicure, wipe away the residue
+Push my hair back, I look hot when I'm (bumpin' that)
+No, I really don't stop when I'm (bumpin' that)
+Gonna jump when it drops when (I'm bumpin' that)
+Dial 999, it's a good time
+Who the fuck are you? I'm a brat when I'm bumpin' that
+Now I wanna hear my track, are you bumpin' that?
+'Til the windows crack, I'll be (bumpin' that)
+No, I never go home, don't sleep, don't eat
+Just do it on repeat, keep (bumpin' that)
+When I'm in the club, yeah, I'm (bumpin' that)
+365, party girl (I'm bumpin' that)
+Should we do a little key?
+Should we have a little line?
+Wanna go real wild when I'm (bumpin' that)
+Meet me in the bathroom if you're (bumpin' that)
+365, party girl (bumpin' that)
+French manicure, wipe away the residue
+Push my hair back, I look hot when I'm (bumpin' that)
+No, I really don't stop, when I'm (bumpin' that)
+Gonna jump when it drops when (I'm bumpin' that)
+Dial 999, it's a good time
+Who the fuck are you? I'm a brat when I'm bumpin' that
+Now I wanna hear my track, are you bumpin' that?
+'Til the windows crack, I'll be (bumpin' that)
+No, I never go home, don't sleep, don't eat
+Just do it on repeat, keep (bumpin' that)
+When I'm in the club, yeah (I'm bumpin' that)
+365, party girl (I'm bumpin' that)
+Should we do a little key?
+Should we have a little line?
+Wanna go real wild when I'm (bumpin' that)
+Meet me in the bathroom if you're (bumpin' that)
+365, party girl (bumpin' that)
+French manicure, wipe away the residue
+Push my hair back, I look hot when I'm (bumpin' that)
+No, I really don't stop, when I'm (bumpin' that)
+Gonna jump when it drops when (I'm bumpin' that)
+Dial 999, it's a good time
+Who the fuck are you? I'm a brat when I'm bumpin' that
+Now I wanna hear my track, are you bumpin' that?
+'Til the windows crack, I'll be (bumpin' that)
+No, I never go home, don't sleep, don't eat
+Just do it on repeat, keep (bumpin' that)
+When I'm in the club, yeah (I'm bumpin' that)
+365, party girl (I'm bumpin' that)
+Should we do a little key?
+Should we have a little line?
+Wanna go real wild when I'm (bumpin' that)
+Meet me in the bathroom if you're (bumpin' that)
+365, party girl (bumpin' that)
+French manicure, wipe away the residue
+Keep (bumpin' that)
+Keep (bumpin' that)
+Keep (bumpin' that)
+Keep
+Keep (bumpin' that)
+Keep (bumpin' that)
+Keep (bumpin' that)
+Keep
+Keep (bumpin' that)
+Keep (bumpin' that)
+Keep (bumpin' that)
+Keep
+Keep (bumpin' that)
+Keep (bumpin' that)
+Keep (bumpin' that)`;
 
-        function changeGame() {
-            const randomGame = games[Math.floor(Math.random() * games.length)];
+    /* ======== IMPLEMENTATION ======== */
+    const lines = lyrics.split('\n').map(l=>l.trim()).filter(Boolean);
+    const stream = document.getElementById('stream');
+    const speedInput = document.getElementById('speed');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const clearBtn = document.getElementById('clearBtn');
 
-            document.body.style.backgroundImage = `url('${randomGame.background}')`;
-            document.getElementById('reddit-post').src = randomGame.reddit_post;
-            document.getElementById('citation-text').textContent = `${randomGame.reddit_user} - ${randomGame.name} (Shutdown: ${randomGame.shutdown})`;
-            document.getElementById('gravestone').src = 'https://i.imgur.com/Rcve9df.png'; // Example gravestone image
-        }
+    let bgIndex = 0;
+    let showIndex = 0;
+    let appendInterval = 700; // ms between new lines (will be adjusted by range)
+    let bgInterval = 2000; // 2 seconds for background swap
+    let appendTimer = null;
+    let bgTimer = null;
+    let paused = false;
 
-        changeGame();
-        document.getElementById('gravestone').addEventListener('click', changeGame);
-    </script>
+    const bg1 = document.getElementById('bg1');
+    const bg2 = document.getElementById('bg2');
+
+    function setBg(el, url){
+      el.style.backgroundImage = `url(${url})`;
+    }
+
+    // preload images quickly
+    images.forEach(src=>{ const i=new Image(); i.src=src; });
+
+    // initialize both bg layers
+    setBg(bg1, images[0]);
+    setBg(bg2, images[1%images.length]);
+
+    function swapBg(){
+      const next = (bgIndex+1) % images.length;
+      const front = (bgIndex % 2 === 0) ? bg2 : bg1;
+      const back  = (bgIndex % 2 === 0) ? bg1 : bg2;
+      setBg(front, images[next]);
+      front.style.opacity = 1;
+      back.style.opacity = 0;
+      bgIndex = next;
+    }
+
+    function appendLine(text){
+      const el = document.createElement('div');
+      el.className = 'line';
+      if(Math.random() > 0.5) el.classList.add('alt');
+      // simple styling variation
+      el.textContent = text;
+      stream.appendChild(el);
+
+      // Remove old nodes to avoid memory growth — keep last ~12
+      const nodes = stream.querySelectorAll('.line');
+      if(nodes.length > 16){
+        nodes[0].remove();
+      }
+    }
+
+    function startStream(){
+      if(appendTimer) clearInterval(appendTimer);
+      appendTimer = setInterval(()=>{
+        if(paused) return;
+        appendLine(lines[showIndex]);
+        showIndex = (showIndex + 1) % lines.length;
+      }, appendInterval);
+    }
+
+    function startBg(){
+      if(bgTimer) clearInterval(bgTimer);
+      bgTimer = setInterval(()=>{
+        if(paused) return;
+        swapBg();
+      }, bgInterval);
+    }
+
+    // controls
+    speedInput.addEventListener('input', (e)=>{
+      appendInterval = Number(e.target.value);
+      startStream();
+    });
+
+    pauseBtn.addEventListener('click', ()=>{
+      paused = !paused;
+      pauseBtn.textContent = paused ? 'Resume' : 'Pause';
+    });
+
+    clearBtn.addEventListener('click', ()=>{
+      stream.innerHTML = '';
+    });
+
+    // initial start
+    startStream();
+    startBg();
+
+    // accessibility: pause when stage is focused via keyboard
+    document.getElementById('stage').addEventListener('focusin', ()=> paused = true);
+    document.getElementById('stage').addEventListener('focusout', ()=> paused = false);
+  </script>
 </body>
 </html>
