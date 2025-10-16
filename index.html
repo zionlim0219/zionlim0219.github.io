@@ -1,303 +1,88 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Bumpin' — Background + Continuous Text</title>
+  <meta charset="utf-8">
+  <title>Bumpin' — Brat Mode</title>
   <style>
-    :root{
-      --bg-overlay: rgba(0,0,0,0.45);
-      --text-color: #fff;
-      --accent: #ffd166;
-      --max-width: 1200px;
-      --font-family: 'Helvetica Neue', Arial, sans-serif;
+    body {
+      margin: 0;
+      background-color: #D1FF00; /* brat green */
+      font-family: Arial, sans-serif;
+      font-stretch: condensed; /* fallback */
+      transform: scaleY(1.08); /* vertical distortion */
+      transform-origin: top;
+      color: black;
+      text-align: center;
+      overflow: hidden;
     }
 
-    html,body{height:100%;margin:0}
-    body{
-      font-family:var(--font-family);
-      background:#000; /* fallback */
-      display:flex;align-items:center;justify-content:center;
-      color:var(--text-color);
+    .lyrics {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2.2rem;
+      line-height: 1.1;
+      text-transform: lowercase;
+      animation: fade 1s ease-in-out;
     }
 
-    /* Stage that holds the background images and the overlaying text */
-    .stage{
-      position:relative;
-      width:min(100%,var(--max-width));
-      height:80vh;
-      overflow:hidden;
-      border-radius:14px;
-      box-shadow:0 20px 60px rgba(0,0,0,0.6);
-    }
-
-    /* Background images: we'll swap the image on the .bg element */
-    .bg{
-      position:absolute;inset:0;background-size:cover;background-position:center;
-      transition:opacity 1s ease;
-      will-change:opacity,transform;
-    }
-
-    .bg::after{ /* subtle dark overlay */
-      content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.5));
-    }
-
-    /* Text overlay container */
-    .overlay{
-      position:absolute;inset:0;display:flex;flex-direction:column;pointer-events:none;
-    }
-
-    .top-left-hint{
-      position:absolute;left:18px;top:18px;background:rgba(0,0,0,0.35);padding:8px 10px;border-radius:8px;font-size:13px;pointer-events:auto;
-      backdrop-filter:blur(3px);
-    }
-
-    /* The stream area — text lines will be appended here */
-    .stream{
-      margin:40px 60px 60px 60px; /* leave space around */
-      padding:12px;flex:1;display:flex;flex-direction:column;gap:8px;justify-content:flex-end;overflow:hidden;
-    }
-
-    .line{
-      font-size:clamp(18px,2.4vw,32px);
-      line-height:1.05;font-weight:700;white-space:nowrap;
-      transform:translateY(20px);opacity:0; /* start slightly down */
-      animation:rise 4s linear forwards;
-      text-shadow:0 4px 18px rgba(0,0,0,0.6);
-      pointer-events:auto;
-      padding:4px 8px;border-radius:6px;display:inline-block;
-    }
-
-    /* Slight alternating styles to give depth */
-    .line.alt{font-weight:800;letter-spacing:0.6px}
-
-    @keyframes rise{
-      0%{ transform:translateY(20px) scale(0.98); opacity:0 }
-      10%{ opacity:1 }
-      90%{ transform:translateY(-120%); opacity:0.12 }
-      100%{ transform:translateY(-200%); opacity:0 }
-    }
-
-    /* Controls panel bottom-right */
-    .controls{
-      position:absolute;right:18px;bottom:18px;background:rgba(0,0,0,0.35);padding:10px;border-radius:10px;font-size:13px;display:flex;gap:8px;align-items:center;pointer-events:auto;
-    }
-
-    .btn{background:transparent;border:1px solid rgba(255,255,255,0.12);color:var(--text-color);padding:6px 10px;border-radius:8px;cursor:pointer}
-    .btn:active{transform:translateY(1px)}
-
-    /* Pause overlay when hovered */
-    .stage:hover .line{animation-play-state:paused}
-
-    /* Responsive tweaks */
-    @media (max-width:640px){
-      .stream{margin:20px}
-      .top-left-hint{font-size:12px}
+    @keyframes fade {
+      0% { opacity: 0; transform: translate(-50%, -45%); }
+      10% { opacity: 1; transform: translate(-50%, -50%); }
+      90% { opacity: 1; }
+      100% { opacity: 0; transform: translate(-50%, -55%); }
     }
   </style>
 </head>
 <body>
-  <div class="stage" id="stage">
-    <div class="bg" id="bg1" style="opacity:1"></div>
-    <div class="bg" id="bg2" style="opacity:0"></div>
-
-    <div class="overlay">
-      <div class="top-left-hint">Hover to pause · images change every 2s</div>
-      <div class="stream" id="stream" aria-live="polite"></div>
-      <div class="controls">
-        <button class="btn" id="pauseBtn">Pause</button>
-        <button class="btn" id="clearBtn">Clear</button>
-        <label style="font-size:12px;opacity:0.9;margin-left:6px">Speed:</label>
-        <input id="speed" type="range" min="200" max="1600" value="700">
-      </div>
-    </div>
-  </div>
+  <div class="lyrics" id="lyrics"></div>
 
   <script>
-    /* ======== CONFIG ======== */
-    // Background images: replace these with local files (e.g. './images/1.jpg')
-    const images = [
-      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=1',
-      'https://images.unsplash.com/photo-1520975912429-2d7f6b9bff1f?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=2',
-      'https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=3',
-      'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=4'
+    // approximate lyric timing (in seconds)
+    const timedLyrics = [
+      [0, "bumpin' that, bumpin' that, bumpin' that, bumpin' that"],
+      [4, "okay, okay"],
+      [6, "here we go"],
+      [8, "when i'm in the club, yeah, i'm bumpin' that"],
+      [12, "when i'm at the house, yeah, i'm bumpin' that"],
+      [16, "365, party girl, bumpin' that"],
+      [20, "should we do a little key?"],
+      [23, "should we have a little line?"],
+      [26, "wanna go real wild when i'm bumpin' that"],
+      [30, "meet me in the bathroom if you're bumpin' that"],
+      [34, "french manicure, wipe away the residue"],
+      [38, "push my hair back, i look hot when i'm bumpin' that"],
+      [42, "no, i really don't stop when i'm bumpin' that"],
+      [46, "dial 999, it's a good time"],
+      [50, "who the fuck are you? i'm a brat when i'm bumpin' that"],
+      [55, "now i wanna hear my track — are you bumpin' that?"],
+      [59, "til the windows crack, i'll be bumpin' that"],
+      [64, "no, i never go home, don't sleep, don't eat"],
+      [68, "just do it on repeat, keep bumpin' that"],
+      [72, "keep bumpin' that"],
+      [75, "keep bumpin' that"],
+      [78, "keep bumpin' that"],
+      [81, "keep bumpin' that"],
+      [85, "keep bumpin' that"],
+      [88, "keep bumpin' that"],
+      [91, "keep bumpin' that"],
+      [94, "keep bumpin' that"],
     ];
 
-    // Lyrics — user-provided. We use template literal so newlines are preserved.
-    const lyrics = `Bumpin' that, bumpin' that, bumpin' that, bumpin' that
-Bumpin' that, bumpin' that, bumpin' that, bumpin' that
-Okay, okay
-Okay, okay, okay
-Here we go
-When I'm in the club, yeah, I'm (bumpin' that)
-When I'm at the house, yeah, I'm (bumpin' that)
-365, party girl (bumpin' that)
-Should we do a little key?
-Should we have a little line?
-Wanna go real wild when I'm (bumpin' that)
-Meet me in the bathroom if you're (bumpin' that)
-365, party girl (bumpin' that)
-French manicure, wipe away the residue
-Push my hair back, I look hot when I'm (bumpin' that)
-No, I really don't stop when I'm (bumpin' that)
-Gonna jump when it drops when (I'm bumpin' that)
-Dial 999, it's a good time
-Who the fuck are you? I'm a brat when I'm bumpin' that
-Now I wanna hear my track, are you bumpin' that?
-'Til the windows crack, I'll be (bumpin' that)
-No, I never go home, don't sleep, don't eat
-Just do it on repeat, keep (bumpin' that)
-When I'm in the club, yeah, I'm (bumpin' that)
-365, party girl (I'm bumpin' that)
-Should we do a little key?
-Should we have a little line?
-Wanna go real wild when I'm (bumpin' that)
-Meet me in the bathroom if you're (bumpin' that)
-365, party girl (bumpin' that)
-French manicure, wipe away the residue
-Push my hair back, I look hot when I'm (bumpin' that)
-No, I really don't stop, when I'm (bumpin' that)
-Gonna jump when it drops when (I'm bumpin' that)
-Dial 999, it's a good time
-Who the fuck are you? I'm a brat when I'm bumpin' that
-Now I wanna hear my track, are you bumpin' that?
-'Til the windows crack, I'll be (bumpin' that)
-No, I never go home, don't sleep, don't eat
-Just do it on repeat, keep (bumpin' that)
-When I'm in the club, yeah (I'm bumpin' that)
-365, party girl (I'm bumpin' that)
-Should we do a little key?
-Should we have a little line?
-Wanna go real wild when I'm (bumpin' that)
-Meet me in the bathroom if you're (bumpin' that)
-365, party girl (bumpin' that)
-French manicure, wipe away the residue
-Push my hair back, I look hot when I'm (bumpin' that)
-No, I really don't stop, when I'm (bumpin' that)
-Gonna jump when it drops when (I'm bumpin' that)
-Dial 999, it's a good time
-Who the fuck are you? I'm a brat when I'm bumpin' that
-Now I wanna hear my track, are you bumpin' that?
-'Til the windows crack, I'll be (bumpin' that)
-No, I never go home, don't sleep, don't eat
-Just do it on repeat, keep (bumpin' that)
-When I'm in the club, yeah (I'm bumpin' that)
-365, party girl (I'm bumpin' that)
-Should we do a little key?
-Should we have a little line?
-Wanna go real wild when I'm (bumpin' that)
-Meet me in the bathroom if you're (bumpin' that)
-365, party girl (bumpin' that)
-French manicure, wipe away the residue
-Keep (bumpin' that)
-Keep (bumpin' that)
-Keep (bumpin' that)
-Keep
-Keep (bumpin' that)
-Keep (bumpin' that)
-Keep (bumpin' that)
-Keep
-Keep (bumpin' that)
-Keep (bumpin' that)
-Keep (bumpin' that)
-Keep
-Keep (bumpin' that)
-Keep (bumpin' that)
-Keep (bumpin' that)`;
+    const display = document.getElementById('lyrics');
 
-    /* ======== IMPLEMENTATION ======== */
-    const lines = lyrics.split('\n').map(l=>l.trim()).filter(Boolean);
-    const stream = document.getElementById('stream');
-    const speedInput = document.getElementById('speed');
-    const pauseBtn = document.getElementById('pauseBtn');
-    const clearBtn = document.getElementById('clearBtn');
-
-    let bgIndex = 0;
-    let showIndex = 0;
-    let appendInterval = 700; // ms between new lines (will be adjusted by range)
-    let bgInterval = 2000; // 2 seconds for background swap
-    let appendTimer = null;
-    let bgTimer = null;
-    let paused = false;
-
-    const bg1 = document.getElementById('bg1');
-    const bg2 = document.getElementById('bg2');
-
-    function setBg(el, url){
-      el.style.backgroundImage = `url(${url})`;
+    function showLine(line) {
+      display.textContent = line;
+      display.style.animation = 'none';
+      void display.offsetWidth; // reset animation
+      display.style.animation = 'fade 1s ease-in-out';
     }
 
-    // preload images quickly
-    images.forEach(src=>{ const i=new Image(); i.src=src; });
-
-    // initialize both bg layers
-    setBg(bg1, images[0]);
-    setBg(bg2, images[1%images.length]);
-
-    function swapBg(){
-      const next = (bgIndex+1) % images.length;
-      const front = (bgIndex % 2 === 0) ? bg2 : bg1;
-      const back  = (bgIndex % 2 === 0) ? bg1 : bg2;
-      setBg(front, images[next]);
-      front.style.opacity = 1;
-      back.style.opacity = 0;
-      bgIndex = next;
-    }
-
-    function appendLine(text){
-      const el = document.createElement('div');
-      el.className = 'line';
-      if(Math.random() > 0.5) el.classList.add('alt');
-      // simple styling variation
-      el.textContent = text;
-      stream.appendChild(el);
-
-      // Remove old nodes to avoid memory growth — keep last ~12
-      const nodes = stream.querySelectorAll('.line');
-      if(nodes.length > 16){
-        nodes[0].remove();
-      }
-    }
-
-    function startStream(){
-      if(appendTimer) clearInterval(appendTimer);
-      appendTimer = setInterval(()=>{
-        if(paused) return;
-        appendLine(lines[showIndex]);
-        showIndex = (showIndex + 1) % lines.length;
-      }, appendInterval);
-    }
-
-    function startBg(){
-      if(bgTimer) clearInterval(bgTimer);
-      bgTimer = setInterval(()=>{
-        if(paused) return;
-        swapBg();
-      }, bgInterval);
-    }
-
-    // controls
-    speedInput.addEventListener('input', (e)=>{
-      appendInterval = Number(e.target.value);
-      startStream();
+    // sync based on real-time
+    timedLyrics.forEach(([time, text]) => {
+      setTimeout(() => showLine(text), time * 1000);
     });
-
-    pauseBtn.addEventListener('click', ()=>{
-      paused = !paused;
-      pauseBtn.textContent = paused ? 'Resume' : 'Pause';
-    });
-
-    clearBtn.addEventListener('click', ()=>{
-      stream.innerHTML = '';
-    });
-
-    // initial start
-    startStream();
-    startBg();
-
-    // accessibility: pause when stage is focused via keyboard
-    document.getElementById('stage').addEventListener('focusin', ()=> paused = true);
-    document.getElementById('stage').addEventListener('focusout', ()=> paused = false);
   </script>
 </body>
 </html>
