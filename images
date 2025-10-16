@@ -2,5 +2,7 @@ const images = [
   "https://i.pinimg.com/736x/5f/7d/ba/5f7dbafaf9c6f847bdf297203e53fc82.jpg",
   "https://i.pinimg.com/1200x/84/65/60/846560ae39bab06309e1a4a7d55b72ee.jpg",
   "https://i.pinimg.com/736x/8c/e5/38/8ce53858f2a9f52d0c001352cffa7c33.jpg",
-  "https://i.pinimg.com/1200x/8b/34/00/8b34009aa8f8d687016637c2aeac955d.jpg"
+  "https://i.pinimg.com/1200x/8b/34/00/8b34009aa8f8d687016637c2aeac955d.jpg",
+  "https://i.ytimg.com/vi/mlYQ5LT9C8s/maxresdefault.jpg",
+  "https://thefader-res.cloudinary.com/private_images/w_640,c_limit,f_auto,q_auto:eco/Screen_Shot_2018-10-02_at_2.29.39_PM_ohcymn/slayyyter-bff-interview.jpg"
 ];
