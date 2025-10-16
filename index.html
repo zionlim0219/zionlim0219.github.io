@@ -1,88 +1,144 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Bumpin' — Brat Mode</title>
-  <style>
-    body {
-      margin: 0;
-      background-color: #D1FF00; /* brat green */
-      font-family: Arial, sans-serif;
-      font-stretch: condensed; /* fallback */
-      transform: scaleY(1.08); /* vertical distortion */
-      transform-origin: top;
-      color: black;
-      text-align: center;
-      overflow: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>bumpin' that</title>
+<style>
+  body {
+    background-color: #8ACE00;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+  }
 
-    .lyrics {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 2.2rem;
-      line-height: 1.1;
-      text-transform: lowercase;
-      animation: fade 1s ease-in-out;
-    }
+  .lyric {
+    position: absolute;
+    color: black;
+    font-size: 22px;
+    font-weight: bold;
+    text-transform: lowercase;
+    transform: scaleY(1.2);
+    opacity: 0;
+    animation: fadeIn 1.2s ease forwards, jitter 0.3s infinite alternate;
+    pointer-events: none;
+  }
 
-    @keyframes fade {
-      0% { opacity: 0; transform: translate(-50%, -45%); }
-      10% { opacity: 1; transform: translate(-50%, -50%); }
-      90% { opacity: 1; }
-      100% { opacity: 0; transform: translate(-50%, -55%); }
-    }
-  </style>
+  .image {
+    position: absolute;
+    width: 130px;
+    height: auto;
+    border-radius: 8px;
+    animation: fadeIn 2s ease forwards, jitter 0.4s infinite alternate;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes jitter {
+    0% { transform: scaleY(1.2) translate(0px, 0px); }
+    25% { transform: scaleY(1.2) translate(1px, -1px); }
+    50% { transform: scaleY(1.2) translate(-1px, 1px); }
+    75% { transform: scaleY(1.2) translate(1px, 1px); }
+    100% { transform: scaleY(1.2) translate(-1px, -1px); }
+  }
+</style>
 </head>
 <body>
-  <div class="lyrics" id="lyrics"></div>
 
-  <script>
-    // approximate lyric timing (in seconds)
-    const timedLyrics = [
-      [0, "bumpin' that, bumpin' that, bumpin' that, bumpin' that"],
-      [4, "okay, okay"],
-      [6, "here we go"],
-      [8, "when i'm in the club, yeah, i'm bumpin' that"],
-      [12, "when i'm at the house, yeah, i'm bumpin' that"],
-      [16, "365, party girl, bumpin' that"],
-      [20, "should we do a little key?"],
-      [23, "should we have a little line?"],
-      [26, "wanna go real wild when i'm bumpin' that"],
-      [30, "meet me in the bathroom if you're bumpin' that"],
-      [34, "french manicure, wipe away the residue"],
-      [38, "push my hair back, i look hot when i'm bumpin' that"],
-      [42, "no, i really don't stop when i'm bumpin' that"],
-      [46, "dial 999, it's a good time"],
-      [50, "who the fuck are you? i'm a brat when i'm bumpin' that"],
-      [55, "now i wanna hear my track — are you bumpin' that?"],
-      [59, "til the windows crack, i'll be bumpin' that"],
-      [64, "no, i never go home, don't sleep, don't eat"],
-      [68, "just do it on repeat, keep bumpin' that"],
-      [72, "keep bumpin' that"],
-      [75, "keep bumpin' that"],
-      [78, "keep bumpin' that"],
-      [81, "keep bumpin' that"],
-      [85, "keep bumpin' that"],
-      [88, "keep bumpin' that"],
-      [91, "keep bumpin' that"],
-      [94, "keep bumpin' that"],
-    ];
+<script>
+  const lyrics = [
+    "bumpin' that, bumpin' that, bumpin' that, bumpin' that",
+    "bumpin' that, bumpin' that, bumpin' that, bumpin' that",
+    "okay, okay",
+    "okay, okay, okay",
+    "here we go",
+    "when i'm in the club, yeah, i'm bumpin' that",
+    "when i'm at the house, yeah, i'm bumpin' that",
+    "365, party girl, bumpin' that",
+    "should we do a little key?",
+    "should we have a little line?",
+    "wanna go real wild when i'm bumpin' that",
+    "meet me in the bathroom if you're bumpin' that",
+    "365, party girl, bumpin' that",
+    "french manicure, wipe away the residue",
+    "push my hair back, i look hot when i'm bumpin' that",
+    "no, i really don't stop when i'm bumpin' that",
+    "gonna jump when it drops when i'm bumpin' that",
+    "dial 999, it's a good time",
+    "who the fuck are you? i'm a brat when i'm bumpin' that",
+    "now i wanna hear my track, are you bumpin' that?",
+    "'til the windows crack, i'll be bumpin' that",
+    "no, i never go home, don't sleep, don't eat",
+    "just do it on repeat, keep bumpin' that",
+    "keep bumpin' that",
+    "keep bumpin' that",
+    "keep",
+    "keep bumpin' that",
+    "keep bumpin' that",
+    "keep bumpin' that",
+    "keep",
+    "keep bumpin' that",
+    "keep bumpin' that",
+    "keep bumpin' that",
+    "keep",
+    "keep bumpin' that",
+    "keep bumpin' that",
+    "keep bumpin' that"
+  ];
 
-    const display = document.getElementById('lyrics');
+  const images = [
+    "images/1.jpg",
+    "images/2.jpg",
+    "images/3.jpg",
+    "images/4.jpg"
+  ];
 
-    function showLine(line) {
-      display.textContent = line;
-      display.style.animation = 'none';
-      void display.offsetWidth; // reset animation
-      display.style.animation = 'fade 1s ease-in-out';
-    }
+  let lyricIndex = 0;
 
-    // sync based on real-time
-    timedLyrics.forEach(([time, text]) => {
-      setTimeout(() => showLine(text), time * 1000);
-    });
-  </script>
+  function getRandomPosition(elementWidth, elementHeight) {
+    const x = Math.random() * (window.innerWidth - elementWidth - 50);
+    const y = Math.random() * (window.innerHeight - elementHeight - 180) + 100;
+    return { x, y };
+  }
+
+  function showLyric() {
+    if (lyricIndex >= lyrics.length) return;
+
+    const lyric = document.createElement("div");
+    lyric.className = "lyric";
+    lyric.textContent = lyrics[lyricIndex];
+    document.body.appendChild(lyric);
+
+    const rect = lyric.getBoundingClientRect();
+    const { x, y } = getRandomPosition(rect.width, rect.height);
+    lyric.style.left = `${x}px`;
+    lyric.style.top = `${y}px`;
+
+    lyricIndex++;
+    setTimeout(showLyric, 2500); // show new lyric every 2.5s
+  }
+
+  function showRandomImage() {
+    const img = document.createElement("img");
+    img.className = "image";
+    img.src = images[Math.floor(Math.random() * images.length)];
+    document.body.appendChild(img);
+
+    const { x, y } = getRandomPosition(130, 130);
+    img.style.left = `${x}px`;
+    img.style.top = `${y}px`;
+  }
+
+  window.onload = () => {
+    showLyric();
+    setInterval(showRandomImage, 6000); // new image every 6s
+  };
+</script>
+
 </body>
 </html>
