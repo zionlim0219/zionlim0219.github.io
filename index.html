@@ -15,6 +15,41 @@
     width: 100vw;
   }
 
+  /* ===== TYPOGRAPHIC SCALE SECTION (Major Third) ===== */
+  .text-container {
+    position: absolute;
+    top: 60px;
+    left: 70px;
+    text-align: left;
+    max-width: 600px;
+    color: black;
+    z-index: 10;
+    animation: fadeIn 1.5s ease forwards;
+  }
+
+  .main-title {
+    font-size: 3rem; /* Major Third scale */
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    text-transform: lowercase;
+    margin-bottom: 0.4em;
+  }
+
+  .subheader {
+    font-size: 2.4rem; /* Next step down */
+    font-weight: 600;
+    text-transform: lowercase;
+    margin-bottom: 0.6em;
+  }
+
+  .body-text {
+    font-size: 1.2rem; /* Base step */
+    line-height: 1.6;
+    font-weight: 400;
+    max-width: 520px;
+  }
+
+  /* ===== ORIGINAL ANIMATIONS + FLOAT ELEMENTS ===== */
   .lyric {
     position: absolute;
     color: black;
@@ -58,6 +93,16 @@
 </head>
 <body>
 
+<!-- ===== TOP-LEFT HEADER SECTION ===== -->
+<div class="text-container">
+  <div class="main-title">bumpin’ that</div>
+  <div class="subheader">brat mode activated</div>
+  <div class="body-text">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget felis eu nunc mattis blandit. Pellentesque ac lacus ac velit pulvinar sagittis. Sed euismod, neque et fringilla sodales, lectus massa viverra sapien, id sagittis turpis enim non arcu.
+  </div>
+</div>
+
+<!-- ===== FLOATING LYRICS + IMAGES ===== -->
 <script>
   const lyrics = [
     "bumpin' that, bumpin' that, bumpin' that, bumpin' that",
@@ -100,13 +145,13 @@
   ];
 
   const images = [
-  "https://i.pinimg.com/736x/5f/7d/ba/5f7dbafaf9c6f847bdf297203e53fc82.jpg",
-  "https://i.pinimg.com/1200x/84/65/60/846560ae39bab06309e1a4a7d55b72ee.jpg",
-  "https://i.pinimg.com/736x/8c/e5/38/8ce53858f2a9f52d0c001352cffa7c33.jpg",
-  "https://i.pinimg.com/1200x/8b/34/00/8b34009aa8f8d687016637c2aeac955d.jpg",
-  "https://i.ytimg.com/vi/mlYQ5LT9C8s/maxresdefault.jpg",
-  "https://thefader-res.cloudinary.com/private_images/w_640,c_limit,f_auto,q_auto:eco/Screen_Shot_2018-10-02_at_2.29.39_PM_ohcymn/slayyyter-bff-interview.jpg"
-];
+    "https://i.pinimg.com/736x/5f/7d/ba/5f7dbafaf9c6f847bdf297203e53fc82.jpg",
+    "https://i.pinimg.com/1200x/84/65/60/846560ae39bab06309e1a4a7d55b72ee.jpg",
+    "https://i.pinimg.com/736x/8c/e5/38/8ce53858f2a9f52d0c001352cffa7c33.jpg",
+    "https://i.pinimg.com/1200x/8b/34/00/8b34009aa8f8d687016637c2aeac955d.jpg",
+    "https://i.ytimg.com/vi/mlYQ5LT9C8s/maxresdefault.jpg",
+    "https://thefader-res.cloudinary.com/private_images/w_640,c_limit,f_auto,q_auto:eco/Screen_Shot_2018-10-02_at_2.29.39_PM_ohcymn/slayyyter-bff-interview.jpg"
+  ];
 
   let lyricIndex = 0;
 
