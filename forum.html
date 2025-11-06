@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vibs (very important brats)</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #8ACE00;
+      font-family: Arial, sans-serif;
+      color: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .subtitle {
+      font-size: 1.1em;
+      margin-bottom: 30px;
+      text-align: center;
+      width: 80%;
+      line-height: 1.4;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      max-width: 1000px;
+      margin-bottom: 60px;
+    }
+
+    .profile-card {
+      background-color: #fff;
+      border: 2px solid #000;
+      border-radius: 8px;
+      text-align: center;
+
+      padding: 10px;
+      transition: transform 0.2s ease;
+    }
+
+    .profile-card:hover {
+      transform: scale(1.03);
+    }
+
+    .profile-pic {
+      width: 100%;
+      height: 200px;
+      background-color: #ccc;
+      border: 2px solid #000;
+      margin-bottom: 10px;
+      background-image: url('https://via.placeholder.com/200');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .username {
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 1.1em;
+    }
+
+    .bio {
+      font-size: 0.9em;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .add-friend-btn {
+      background-color: #1877F2; /* old fb blue */
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .add-friend-btn:hover {
+      background-color: #145dbf;
+    }
+
+    footer {
+      font-size: 0.8em;
+      color: #222;
+      padding: 20px;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>vib (very important brats)</h1>
+  <div class="subtitle">
+    A nostalgic archive of celebrities and pop culture moments tied to the intersection of fame, nightlife, and excess — captured like old forum profiles in a digital museum.
+  </div>
+
+  <div class="grid">
+    <!-- Profile Card Example -->
+    <div class="profile-card">
+      <div class="profile-pic"></div>
+      <div class="username">Britney Spears</div>
+      <div class="bio">“It’s Britney, b*tch.” — early-2000s pop icon whose fame, freedom, and breakdowns shaped how we see celebrity burnout.</div>
+      <button class="add-friend-btn">Add Friend</button>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-pic"></div>
+      <div class="username">Amy Winehouse</div>
+      <div class="bio">A voice that defined soul for a generation — and a public struggle that exposed the industry’s cruelty.</div>
+      <button class="add-friend-btn">Add Friend</button>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-pic"></div>
+      <div class="username">Lindsay Lohan</div>
+      <div class="bio">From Disney stardom to club queen — a Y2K tabloid era icon of chaos, glam, and resilience.</div>
+      <button class="add-friend-btn">Add Friend</button>
+    </div>
+
+    <!-- Duplicate more cards for the rest (12 total) -->
+    <div class="profile-card"><div class="profile-pic"></div><div class="username">Paris Hilton</div><div class="bio">The original influencer — nightlife royalty, scandalous and strategic.</div><button class="add-friend-btn">Add Friend</button></div>
+    <div class="profile-card"><div class="profile-pic"></div><div class="username">Pete Doherty</div><div class="bio">The poetic chaos of 2000s rock — between art, addiction, and anarchy.</div><button class="add-friend-btn">Add Friend</button></div>
+    <div class="profile-card"><div class="profile-pic"></div><div class="username">Mac Miller</div><div class="bio">A modern voice for vulnerability, gone too soon — his music and story live on.</div><button class="add-friend-btn">Add Friend</button></div>
+    <div class="profile-card"><div class="profile-pic"></div><div class="username">Lady Gaga</div><div class="bio">Club-born stardom — performance, fame, and pain fused into pop spectacle.</div><button class="add-friend-btn">Add Friend</button></div>
+    <div class="profile-card"><div class="profile-pic"></div><div class="username">Lil Peep</div><div class="bio">A digital-age rockstar blurring emo, rap, and heartbreak into a new kind of youth culture.</div><button class="add-friend-btn">Add Friend</button></div>
+    <div class="profile-card"><div class="profile-pic"></div><div class="username">Whitney Houston</div><div class="bio">The ultimate star — a voice unmatched, a story shaped by fame’s extremes.</div><button class="add-friend-btn">Add Friend</button></div>
+    <div class="profile-card"><div class="profile-pic"></div><div class="username">The Weeknd</div><div class="bio">Exploring nihilism, excess, and love through glossy pop & darkness.</div><button class="add-friend-btn">Add Friend</button></div>
+    <div class="profile-card"><div class="profile-pic"></div><div class="username">Kurt Cobain</div><div class="bio">The anti-celebrity icon who turned pain into art — and paid the price of fame.</div><button class="add-friend-btn">Add Friend</button></div>
+    <div class="profile-card"><div class="profile-pic"></div><div class="username">Lana Del Rey</div><div class="bio">Hollywood sadness and addiction glamor — nostalgia’s pop poet.</div><button class="add-friend-btn">Add Friend</button></div>
+  </div>
+
+  <footer>
+    <a href="index.html">← Back to Home</a>
+  </footer>
+</body>
+</html>
