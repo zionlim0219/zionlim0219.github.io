@@ -77,6 +77,37 @@
     animation: fadeIn 1.5s ease forwards, slowDrift 6s infinite ease-in-out alternate;
   }
 
+  /* ===== rainbow popup ===== */
+  .popup-text {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    z-index: 100;
+    cursor: pointer;
+    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbowShift 3s linear infinite, pulse 1s ease-in-out infinite alternate;
+    pointer-events: auto;
+  }
+
+  @keyframes rainbowShift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+
+  @keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.2); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+  }
+
   /* ===== rainbow button ===== */
   .rainbow-btn {
     position: fixed;
@@ -100,11 +131,6 @@
 
   .rainbow-btn:hover {
     transform: scale(1.08);
-  }
-
-  @keyframes rainbowShift {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
   }
 
   @keyframes fadeIn {
@@ -139,7 +165,9 @@
 <!-- ===== rainbow button ===== -->
 <button class="rainbow-btn">brat mode 💽</button>
 
-<!-- ===== floating lyrics & images ===== -->
+<!-- ===== obnoxious rainbow popup ===== -->
+<div class="popup-text">CLICK ME!!!!!!!!!!!!!!!!!!!</div>
+
 <script>
   const lyrics = [
     "bumpin' that, bumpin' that, bumpin' that, bumpin' that",
@@ -229,7 +257,6 @@
   // ===== Brat Mode button click =====
   const rainbowBtn = document.querySelector('.rainbow-btn');
   rainbowBtn.addEventListener('click', () => {
-    // Spawn 5 random lyrics
     for (let i = 0; i < 5; i++) {
       const lyric = document.createElement("div");
       lyric.className = "lyric";
@@ -242,7 +269,33 @@
       lyric.style.top = `${y}px`;
     }
 
-    // Spawn 5 random images
+    for (let i = 0; i < 5; i++) {
+      const img = document.createElement("img");
+      img.className = "image";
+      img.src = images[Math.floor(Math.random() * images.length)];
+      document.body.appendChild(img);
+
+      const { x, y } = getRandomPosition(160, 160);
+      img.style.left = `${x}px`;
+      img.style.top = `${y}px`;
+    }
+  });
+
+  // ===== popup click =====
+  const popup = document.querySelector('.popup-text');
+  popup.addEventListener('click', () => {
+    for (let i = 0; i < 5; i++) {
+      const lyric = document.createElement("div");
+      lyric.className = "lyric";
+      lyric.textContent = lyrics[Math.floor(Math.random() * lyrics.length)];
+      document.body.appendChild(lyric);
+
+      const rect = lyric.getBoundingClientRect();
+      const { x, y } = getRandomPosition(rect.width, rect.height);
+      lyric.style.left = `${x}px`;
+      lyric.style.top = `${y}px`;
+    }
+
     for (let i = 0; i < 5; i++) {
       const img = document.createElement("img");
       img.className = "image";
