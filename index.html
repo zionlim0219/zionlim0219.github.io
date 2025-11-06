@@ -77,7 +77,7 @@
     animation: fadeIn 1.5s ease forwards, slowDrift 6s infinite ease-in-out alternate;
   }
 
-  /* ===== rainbow popup ===== */
+  /* ===== obnoxious rainbow popup ===== */
   .popup-text {
     position: fixed;
     top: 50%;
@@ -106,31 +106,6 @@
     0% { transform: translate(-50%, -50%) scale(1); }
     50% { transform: translate(-50%, -50%) scale(1.2); }
     100% { transform: translate(-50%, -50%) scale(1); }
-  }
-
-  /* ===== rainbow button ===== */
-  .rainbow-btn {
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
-    padding: 14px 26px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-transform: lowercase;
-    color: black;
-    border: none;
-    border-radius: 50px;
-    background: linear-gradient(90deg, #ff0080, #ff8c00, #ffee00, #00ff00, #00ffff, #8000ff);
-    background-size: 300%;
-    animation: rainbowShift 3s linear infinite;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(0,0,0,0.25);
-    transition: transform 0.2s ease;
-    z-index: 50;
-  }
-
-  .rainbow-btn:hover {
-    transform: scale(1.08);
   }
 
   @keyframes fadeIn {
@@ -162,11 +137,8 @@
   </div>
 </div>
 
-<!-- ===== rainbow button ===== -->
-<button class="rainbow-btn">brat mode 💽</button>
-
-<!-- ===== obnoxious rainbow popup ===== -->
-<div class="popup-text">CLICK ME!!!!!!!!!!!!!!!!!!!</div>
+<!-- ===== annoying rainbow popup ===== -->
+<a href="library.html" class="popup-text">CLICK ME!!!!!!!!!!!!!!!!!!!</a>
 
 <script>
   const lyrics = [
@@ -202,19 +174,7 @@
     "https://i.pinimg.com/736x/1f/5b/3a/1f5b3a77c729f74f15da378be865f60c.jpg",
     "https://i.pinimg.com/736x/c9/01/76/c901761f35daccc1a19f58878b077fc9.jpg",
     "https://i.pinimg.com/736x/ca/f4/d1/caf4d14ed6c1813539dce5df1a5cf8e5.jpg",
-    "https://i.pinimg.com/736x/51/de/e6/51dee67536a68fe8e77a140130f86797.jpg",
-    "https://i.pinimg.com/736x/76/a5/31/76a531e117873263d01a7ae7e0eb53da.jpg",
-    "https://i.pinimg.com/736x/d3/4e/c6/d34ec6f55cdc34e5cc8e7324346534ae.jpg",
-    "https://i.pinimg.com/736x/53/5b/1f/535b1f30dbc6d8c8c5d2d81da4eae342.jpg",
-    "https://i.pinimg.com/736x/d0/3e/df/d03edf68dbeb7097743a8cf8b4e7ec01.jpg",
-    "https://i.pinimg.com/1200x/29/5b/af/295bafab2f6d1e97a9373f84ea0dc8e3.jpg",
-    "https://i.pinimg.com/736x/c5/8d/bf/c58dbf6e38839bed9d813a38874a816e.jpg",
-    "https://i.pinimg.com/736x/ac/bc/79/acbc79ee799a4c9a2b2f8790c895d3f5.jpg",
-    "https://i.pinimg.com/736x/8a/68/ab/8a68abca3ad14ecad0c4a7c9a6b4514c.jpg",
-    "https://i.ytimg.com/vi/mlYQ5LT9C8s/maxresdefault.jpg",
-    "https://i.pinimg.com/736x/b6/52/6e/b6526e57663997b001ca4c452ff7c50b.jpg",
-    "https://i.pinimg.com/1200x/cd/2a/53/cd2a5311a070ec17b307f9f5cdba4b2f.jpg",
-    "https://thefader-res.cloudinary.com/private_images/w_640,c_limit,f_auto,q_auto:eco/Screen_Shot_2018-10-02_at_2.29.39_PM_ohcymn/slayyyter-bff-interview.jpg"
+    "https://i.pinimg.com/736x/51/de/e6/51dee67536a68fe8e77a140130f86797.jpg"
   ];
 
   let lyricIndex = 0;
@@ -253,33 +213,6 @@
     img.style.left = `${x}px`;
     img.style.top = `${y}px`;
   }
-
-  // ===== Brat Mode button click =====
-  const rainbowBtn = document.querySelector('.rainbow-btn');
-  rainbowBtn.addEventListener('click', () => {
-    for (let i = 0; i < 5; i++) {
-      const lyric = document.createElement("div");
-      lyric.className = "lyric";
-      lyric.textContent = lyrics[Math.floor(Math.random() * lyrics.length)];
-      document.body.appendChild(lyric);
-
-      const rect = lyric.getBoundingClientRect();
-      const { x, y } = getRandomPosition(rect.width, rect.height);
-      lyric.style.left = `${x}px`;
-      lyric.style.top = `${y}px`;
-    }
-
-    for (let i = 0; i < 5; i++) {
-      const img = document.createElement("img");
-      img.className = "image";
-      img.src = images[Math.floor(Math.random() * images.length)];
-      document.body.appendChild(img);
-
-      const { x, y } = getRandomPosition(160, 160);
-      img.style.left = `${x}px`;
-      img.style.top = `${y}px`;
-    }
-  });
 
   // ===== popup click =====
   const popup = document.querySelector('.popup-text');
