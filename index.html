@@ -15,20 +15,24 @@
     width: 120vw;
   }
 
-  /* ===== TYPOGRAPHIC SCALE SECTION (Major Third) ===== */
-  .text-container {
-    position: absolute;
-    top: 60px;
-    left: 70px;
-    text-align: left;
-    max-width: 600px;
-    color: black;
-    z-index: 10;
-    animation: fadeIn 1.5s ease forwards;
+  .text-container { 
+  position: absolute;
+  top: 60px;
+  left: 70px;
+  text-align: left;
+  max-width: 600px;
+  color: black;
+  z-index: 10;
+  animation: fadeIn 1.5s ease forwards;
+
+  background:#8ACE00;
+backdrop-filter: blur(6px);
+
+
   }
 
   .main-title {
-    font-size: 3rem; /* Major Third scale */
+    font-size: 3rem;
     font-weight: 900;
     letter-spacing: -0.03em;
     text-transform: lowercase;
@@ -36,20 +40,20 @@
   }
 
   .subheader {
-    font-size: 2.4rem; /* Next step down */
+    font-size: 2.4rem;
     font-weight: 600;
     text-transform: lowercase;
     margin-bottom: 0.6em;
   }
 
   .body-text {
-    font-size: 1.2rem; /* Base step */
+    font-size: 1.2rem;
     line-height: 1.6;
     font-weight: 400;
     max-width: 520px;
   }
 
-  /* ===== ORIGINAL ANIMATIONS + FLOAT ELEMENTS ===== */
+  /* ===== floating elements ===== */
   .lyric {
     position: absolute;
     color: black;
@@ -93,7 +97,7 @@
 </head>
 <body>
 
-<!-- ===== TOP-LEFT HEADER SECTION ===== -->
+<!-- ===== top left header ===== -->
 <div class="text-container">
   <div class="main-title">bumpin’ that?</div>
   <div class="subheader">examining the overlap between rave culture, y2k stardom, and drug use in pop culture</div>
@@ -102,7 +106,7 @@
   </div>
 </div>
 
-<!-- ===== FLOATING LYRICS + IMAGES ===== -->
+<!-- =====  lyrics + images yay ===== -->
 <script>
   const lyrics = [
     "bumpin' that, bumpin' that, bumpin' that, bumpin' that",
@@ -149,7 +153,23 @@
     "https://i.pinimg.com/1200x/84/65/60/846560ae39bab06309e1a4a7d55b72ee.jpg",
     "https://i.pinimg.com/736x/8c/e5/38/8ce53858f2a9f52d0c001352cffa7c33.jpg",
     "https://i.pinimg.com/1200x/8b/34/00/8b34009aa8f8d687016637c2aeac955d.jpg",
+    "https://i.pinimg.com/736x/04/41/21/044121dd467d7e96c43d75f839903a09.jpg",
+    "https://i.pinimg.com/736x/76/98/12/769812cf9191ea6300a9d8c8f24a2da1.jpg",
+    "https://i.pinimg.com/736x/1f/5b/3a/1f5b3a77c729f74f15da378be865f60c.jpg",
+    "https://i.pinimg.com/736x/c9/01/76/c901761f35daccc1a19f58878b077fc9.jpg",
+    "https://i.pinimg.com/736x/ca/f4/d1/caf4d14ed6c1813539dce5df1a5cf8e5.jpg",
+    "https://i.pinimg.com/736x/51/de/e6/51dee67536a68fe8e77a140130f86797.jpg",
+    "https://i.pinimg.com/736x/76/a5/31/76a531e117873263d01a7ae7e0eb53da.jpg",
+    "https://i.pinimg.com/736x/d3/4e/c6/d34ec6f55cdc34e5cc8e7324346534ae.jpg",
+    "https://i.pinimg.com/736x/53/5b/1f/535b1f30dbc6d8c8c5d2d81da4eae342.jpg",
+    "https://i.pinimg.com/736x/d0/3e/df/d03edf68dbeb7097743a8cf8b4e7ec01.jpg",
+    "https://i.pinimg.com/1200x/29/5b/af/295bafab2f6d1e97a9373f84ea0dc8e3.jpg",
+    "https://i.pinimg.com/736x/c5/8d/bf/c58dbf6e38839bed9d813a38874a816e.jpg",
+    "https://i.pinimg.com/736x/ac/bc/79/acbc79ee799a4c9a2b2f8790c895d3f5.jpg",
+    "https://i.pinimg.com/736x/8a/68/ab/8a68abca3ad14ecad0c4a7c9a6b4514c.jpg"
     "https://i.ytimg.com/vi/mlYQ5LT9C8s/maxresdefault.jpg",
+    "https://i.pinimg.com/736x/b6/52/6e/b6526e57663997b001ca4c452ff7c50b.jpg",
+    "https://i.pinimg.com/1200x/cd/2a/53/cd2a5311a070ec17b307f9f5cdba4b2f.jpg",
     "https://thefader-res.cloudinary.com/private_images/w_640,c_limit,f_auto,q_auto:eco/Screen_Shot_2018-10-02_at_2.29.39_PM_ohcymn/slayyyter-bff-interview.jpg"
   ];
 
