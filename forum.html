@@ -16,14 +16,48 @@
       min-height: 100vh;
     }
 
+    /* ===== Rainbow pulsing title ===== */
+    .pulsing-title {
+      font-size: 3rem;
+      font-weight: 900;
+      text-transform: lowercase;
+      text-align: center;
+      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+      background-size: 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbowShift 3s linear infinite, pulse 1s ease-in-out infinite alternate;
+      margin: 40px 0 20px 0;
+    }
+
+    @keyframes rainbowShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* ===== Subtitle fade-in ===== */
     .subtitle {
       font-size: 1.1em;
       margin-bottom: 30px;
       text-align: center;
       width: 80%;
       line-height: 1.4;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards;
     }
 
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== Profile grid ===== */
     .grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -37,7 +71,6 @@
       border: 2px solid #000;
       border-radius: 8px;
       text-align: center;
-
       padding: 10px;
       transition: transform 0.2s ease;
     }
@@ -49,12 +82,17 @@
     .profile-pic {
       width: 100%;
       height: 200px;
-      background-color: #ccc;
-      border: 2px solid #000;
       margin-bottom: 10px;
-      background-image: url('https://via.placeholder.com/200');
-      background-size: cover;
-      background-position: center;
+      overflow: hidden;
+    }
+
+    .profile-pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border: 2px solid #000;
+      border-radius: 0;
     }
 
     .username {
@@ -70,7 +108,7 @@
     }
 
     .add-friend-btn {
-      background-color: #1877F2; /* old fb blue */
+      background-color: #1877F2; 
       color: white;
       border: none;
       border-radius: 4px;
@@ -105,48 +143,124 @@
   </style>
 </head>
 <body>
-  <h1>vib (very important brats)</h1>
+  <h1 class="pulsing-title">hall of vib (very important brats)</h1>
   <div class="subtitle">
-    A nostalgic archive of celebrities and pop culture moments tied to the intersection of fame, nightlife, and excess — captured like old forum profiles in a digital museum.
+    a nostalgic archive of celebrities and pop culture moments tied to the intersection of fame, nightlife, and excess
   </div>
 
   <div class="grid">
-    <!-- Profile Card Example -->
+    <!-- All your profile cards go here -->
     <div class="profile-card">
-      <div class="profile-pic"></div>
-      <div class="username">Britney Spears</div>
-      <div class="bio">“It’s Britney, b*tch.” — early-2000s pop icon whose fame, freedom, and breakdowns shaped how we see celebrity burnout.</div>
+      <div class="profile-pic">
+        <img src="https://assets.vogue.com/photos/653aa730c5259ca75a9d1faf/1:1/w_1999,h_1999,c_limit/GettyImages-112482007.jpg" alt="britney spears">
+      </div>
+      <div class="username">britney spears</div>
+      <div class="bio">a pop machine built too young and too fast. her breakdown wasn’t just personal, it was public property. a martyr and symbol of what happens when fame eats its own.</div>
       <button class="add-friend-btn">Add Friend</button>
     </div>
 
     <div class="profile-card">
-      <div class="profile-pic"></div>
-      <div class="username">Amy Winehouse</div>
-      <div class="bio">A voice that defined soul for a generation — and a public struggle that exposed the industry’s cruelty.</div>
+      <div class="profile-pic">
+        <img src="https://cdn-images.dzcdn.net/images/artist/0cacb43a576b031eb169cca27171c1f5/1900x1900-000000-80-0-0.jpg" alt="amy winehouse">
+      </div>
+      <div class="username">amy winehouse</div>
+      <div class="bio">a once-in-a-generation voice caught between raw talent and self-destruction. despite her stardom, with her drug abuse brushed aside, the world couldn’t look away until it was too late.</div>
       <button class="add-friend-btn">Add Friend</button>
     </div>
 
     <div class="profile-card">
-      <div class="profile-pic"></div>
-      <div class="username">Lindsay Lohan</div>
-      <div class="bio">From Disney stardom to club queen — a Y2K tabloid era icon of chaos, glam, and resilience.</div>
+      <div class="profile-pic">
+        <img src="https://fox8.com/wp-content/uploads/sites/12/2013/05/lindsay-lohan.jpg" alt="lindsay lohan">
+      </div>
+      <div class="username">lindsay lohan</div>
+      <div class="bio">the face of early-2000s excess. child star, club regular, tabloid headline, her story blurs the line between performance and survival.</div>
       <button class="add-friend-btn">Add Friend</button>
     </div>
 
-    <!-- Duplicate more cards for the rest (12 total) -->
-    <div class="profile-card"><div class="profile-pic"></div><div class="username">Paris Hilton</div><div class="bio">The original influencer — nightlife royalty, scandalous and strategic.</div><button class="add-friend-btn">Add Friend</button></div>
-    <div class="profile-card"><div class="profile-pic"></div><div class="username">Pete Doherty</div><div class="bio">The poetic chaos of 2000s rock — between art, addiction, and anarchy.</div><button class="add-friend-btn">Add Friend</button></div>
-    <div class="profile-card"><div class="profile-pic"></div><div class="username">Mac Miller</div><div class="bio">A modern voice for vulnerability, gone too soon — his music and story live on.</div><button class="add-friend-btn">Add Friend</button></div>
-    <div class="profile-card"><div class="profile-pic"></div><div class="username">Lady Gaga</div><div class="bio">Club-born stardom — performance, fame, and pain fused into pop spectacle.</div><button class="add-friend-btn">Add Friend</button></div>
-    <div class="profile-card"><div class="profile-pic"></div><div class="username">Lil Peep</div><div class="bio">A digital-age rockstar blurring emo, rap, and heartbreak into a new kind of youth culture.</div><button class="add-friend-btn">Add Friend</button></div>
-    <div class="profile-card"><div class="profile-pic"></div><div class="username">Whitney Houston</div><div class="bio">The ultimate star — a voice unmatched, a story shaped by fame’s extremes.</div><button class="add-friend-btn">Add Friend</button></div>
-    <div class="profile-card"><div class="profile-pic"></div><div class="username">The Weeknd</div><div class="bio">Exploring nihilism, excess, and love through glossy pop & darkness.</div><button class="add-friend-btn">Add Friend</button></div>
-    <div class="profile-card"><div class="profile-pic"></div><div class="username">Kurt Cobain</div><div class="bio">The anti-celebrity icon who turned pain into art — and paid the price of fame.</div><button class="add-friend-btn">Add Friend</button></div>
-    <div class="profile-card"><div class="profile-pic"></div><div class="username">Lana Del Rey</div><div class="bio">Hollywood sadness and addiction glamor — nostalgia’s pop poet.</div><button class="add-friend-btn">Add Friend</button></div>
+    <div class="profile-card">
+      <div class="profile-pic">
+        <img src="https://i.redd.it/2000s-paris-hilton-v0-osdb834lf3091.jpg?width=563&format=pjpg&auto=webp&s=0347fcb931c63bade1cd64442fd8b10cbb983c46" alt="paris hilton">
+      </div>
+      <div class="username">paris hilton</div>
+      <div class="bio">a socialite who turned scandal into empire #thatshot. she invented influencer culture before we had words for it, selling a fantasy of fame, nightlife, and oblivion.</div>
+      <button class="add-friend-btn">Add Friend</button>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-pic">
+        <img src="https://pagesix.com/wp-content/uploads/sites/3/2018/07/demi-lovato-overdose-rehab-1.jpg?quality=75&strip=all&w=744" alt="demi lovato">
+      </div>
+      <div class="username">demi lovato</div>
+      <div class="bio">famous for disney and struggling with drug abuse and addiction, facing relapses and hospitalizations, and uses her experiences to raise awareness about mental health and recovery.</div>
+      <button class="add-friend-btn">Add Friend</button>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-pic">
+        <img src="https://miro.medium.com/1*xmotaE0PMsf3eCAM7mQCvA.jpeg" alt="mac miller">
+      </div>
+      <div class="username">mac miller</div>
+      <div class="bio">a modern voice for vulnerability, gone too soon from his accidental overdose - his music and story live on through his legacy.</div>
+      <button class="add-friend-btn">Add Friend</button>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-pic">
+        <img src="https://hips.hearstapps.com/hmg-prod/images/-photo-of-jimi-hendrix-posed-photo-by-odile-noelredferns.jpg?crop=1xw:1.0xh;center,top&resize=640:*" alt="jimi hendrix">
+      </div>
+      <div class="username">jimi hendrix</div>
+      <div class="bio">legendary guitarist whose groundbreaking music and drug-fueled lifestyle made him a rock icon, gone too soon at 27.</div>
+      <button class="add-friend-btn">Add Friend</button>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-pic">
+        <img src="https://akns-images.eonline.com/eol_images/Entire_Site/201509/rs_600x600-150109090825-600-miley-cyrus-instagram.ls.1915_copy.jpg?fit=around%7C1200:1200&output-quality=90&crop=1200:1200;center,top" alt="miley cyrus">
+      </div>
+      <div class="username">miley cyrus</div>
+      <div class="bio">experimented with drugs and self-destructive behavior but has been open about growth and recovery.</div>
+      <button class="add-friend-btn">Add Friend</button>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-pic">
+        <img src="https://preview.redd.it/last-images-of-whitney-houston-before-her-tragic-death-v0-59xil0st6iuc1.jpg?width=634&format=pjpg&auto=webp&s=ae07a13121f08f5154cd679f2e30b8fd6add6e65" alt="whitney houston">
+      </div>
+      <div class="username">whitney houston</div>
+      <div class="bio">the ultimate star with a voice unmatched, a story shaped by fame’s extremes.</div>
+      <button class="add-friend-btn">Add Friend</button>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-pic">
+        <img src="https://www.usmagazine.com/wp-content/uploads/2025/02/Justin-Bieber-Shares-Video-of-Him-Smoking-After-Denying-Drug-Rumors-feature.jpg?crop=0px%2C0px%2C1628px%2C919px&resize=1200%2C675&quality=78&strip=all" alt="justin bieber">
+      </div>
+      <div class="username">justin bieber</div>
+      <div class="bio">global superstar who has admitted to partying and substance struggles, now focused on sobriety.</div>
+      <button class="add-friend-btn">Add Friend</button>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-pic">
+        <img src="https://media.newyorker.com/photos/5ad514a5cd7220727ab349eb/master/pass/940425_ra505.jpg" alt="kurt cobain">
+      </div>
+      <div class="username">kurt cobain</div>
+      <div class="bio">the iconic frontman of nirvana who turned pain, addiction, and fame’s pressures into raw, timeless music, tragically dying young.</div>
+      <button class="add-friend-btn">Add Friend</button>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-pic">
+        <img src="https://s2.r29static.com/bin/entry/add/x,80/1919301/image.jpg" alt="heath ledger">
+      </div>
+      <div class="username">heath ledger</div>
+      <div class="bio">academy award-winning actor whose prescription drug use contributed to his untimely death at 28.</div>
+      <button class="add-friend-btn">Add Friend</button>
+    </div>
   </div>
 
   <footer>
-    <a href="index.html">← Back to Home</a>
+    <a href="index.html">← back to home</a>
   </footer>
 </body>
 </html>
