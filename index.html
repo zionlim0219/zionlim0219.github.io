@@ -7,7 +7,7 @@
 <style>
   body {
     margin: 0;
-    background-color: #D1FF00; /* Brat green */
+    background-color: #8ACE00;
     font-family: Arial, sans-serif;
     overflow: hidden;
     position: relative;
@@ -24,7 +24,7 @@
     color: black;
     z-index: 10;
     animation: fadeIn 1.5s ease forwards;
-    background: #D1FF00;
+    background: #8ACE00;
     backdrop-filter: blur(6px);
   }
 
@@ -77,6 +77,36 @@
     animation: fadeIn 1.5s ease forwards, slowDrift 6s infinite ease-in-out alternate;
   }
 
+  /* ===== rainbow button ===== */
+  .rainbow-btn {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    padding: 14px 26px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: lowercase;
+    color: black;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(90deg, #ff0080, #ff8c00, #ffee00, #00ff00, #00ffff, #8000ff);
+    background-size: 300%;
+    animation: rainbowShift 3s linear infinite;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+    transition: transform 0.2s ease;
+    z-index: 50;
+  }
+
+  .rainbow-btn:hover {
+    transform: scale(1.08);
+  }
+
+  @keyframes rainbowShift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+
   @keyframes fadeIn {
     from { opacity: 0; transform: scaleY(0.88) translateY(10px); }
     to { opacity: 1; transform: scaleY(0.88) translateY(0); }
@@ -105,6 +135,9 @@
     Writing BRAT, she quieted her inner industry pro who strung together vowel sounds and buzzwords that rhymed, approaching her lyrics as if she were typing a gossipy text to a friend. The method worked, nudging songs about subjects like grief and motherhood past the usual clichés of “confessional writing” and into reality. The somber “So I” is about missing SOPHIE, Charli’s late mentor; it’s also about how terrifying it can be to be friends with a genius. Much ink will be spilled about “I think about it all the time,” where a visit to a friend who recently became a mother inspires life-altering questions about what her freedom’s worth. But what gives the story life is the striking admission that, alongside tenderness and joy, she feels a sting of jealous FOMO: “She’s a radiant mother and he’s a beautiful father, and now they both know these things that I don’t.” You might call it her most vulnerable record to date, if you’re into that sort of thing.
   </div>
 </div>
+
+<!-- ===== rainbow button ===== -->
+<button class="rainbow-btn">brat mode 💽</button>
 
 <!-- ===== floating lyrics & images ===== -->
 <script>
@@ -192,6 +225,35 @@
     img.style.left = `${x}px`;
     img.style.top = `${y}px`;
   }
+
+  // ===== Brat Mode button click =====
+  const rainbowBtn = document.querySelector('.rainbow-btn');
+  rainbowBtn.addEventListener('click', () => {
+    // Spawn 5 random lyrics
+    for (let i = 0; i < 5; i++) {
+      const lyric = document.createElement("div");
+      lyric.className = "lyric";
+      lyric.textContent = lyrics[Math.floor(Math.random() * lyrics.length)];
+      document.body.appendChild(lyric);
+
+      const rect = lyric.getBoundingClientRect();
+      const { x, y } = getRandomPosition(rect.width, rect.height);
+      lyric.style.left = `${x}px`;
+      lyric.style.top = `${y}px`;
+    }
+
+    // Spawn 5 random images
+    for (let i = 0; i < 5; i++) {
+      const img = document.createElement("img");
+      img.className = "image";
+      img.src = images[Math.floor(Math.random() * images.length)];
+      document.body.appendChild(img);
+
+      const { x, y } = getRandomPosition(160, 160);
+      img.style.left = `${x}px`;
+      img.style.top = `${y}px`;
+    }
+  });
 
   window.onload = () => {
     showLyric();
